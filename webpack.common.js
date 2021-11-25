@@ -1,10 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest')
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
 const ImageminMozjpeg = require('imagemin-mozjpeg');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const path = require('path');
 
@@ -32,7 +32,7 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
-  }, 
+  },
   optimization: {
     splitChunks: {
       chunks: 'all',
@@ -46,15 +46,15 @@ module.exports = {
       cacheGroups: {
         defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10
+          priority: -10,
         },
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -78,18 +78,18 @@ module.exports = {
       icons: [
         {
           src: path.resolve('src/public/images/logo/logo.png'),
-          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
-        },
-        {
-          src: path.resolve('src/public/images/logo/logo.png'),
-          size: '1024x1024'
+          sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
         },
         {
           src: path.resolve('src/public/images/logo/logo.png'),
           size: '1024x1024',
-          purpose: 'maskable'
-        }
-      ]
+        },
+        {
+          src: path.resolve('src/public/images/logo/logo.png'),
+          size: '1024x1024',
+          purpose: 'maskable',
+        },
+      ],
     }),
     new ServiceWorkerWebpackPlugin({
       entry: path.resolve(__dirname, 'src/scripts/sw.js'),
@@ -102,5 +102,6 @@ module.exports = {
         }),
       ],
     }),
+    new BundleAnalyzerPlugin(),
   ],
 };
